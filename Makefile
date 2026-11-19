@@ -1,24 +1,19 @@
-BACKEND_TEST_ENV = DATABASE_URL=$${TEST_DATABASE_URL:-$${DATABASE_URL:-postgresql+asyncpg://supoclip:supoclip_password@127.0.0.1:5432/supoclip}} REDIS_HOST=$${REDIS_HOST:-127.0.0.1} REDIS_PORT=$${REDIS_PORT:-6379}
-FRONTEND_TEST_ENV = DATABASE_URL=$${TEST_DATABASE_URL:-$${DATABASE_URL:-postgresql://supoclip:supoclip_password@127.0.0.1:5432/supoclip}} BACKEND_AUTH_SECRET=$${BACKEND_AUTH_SECRET:-supoclip_test_secret} BETTER_AUTH_SECRET=$${BETTER_AUTH_SECRET:-supoclip_better_auth_test_secret} NEXT_PUBLIC_SELF_HOST=true
+MODEL_DIR ?= data/models/whisper-base
+PYTHON ?= python3
 
-.PHONY: test check test-backend test-frontend test-e2e test-ci
-
-test: test-backend test-frontend
-
-test-backend:
-	cd backend && uv sync --frozen --all-groups
-	cd backend && $(BACKEND_TEST_ENV) .venv/bin/pytest
-
-test-frontend:
-	cd frontend && pnpm install --frozen-lockfile
-	cd frontend && $(FRONTEND_TEST_ENV) pnpm run test:coverage
-
-test-e2e:
-	cd frontend && pnpm install --frozen-lockfile
-	cd frontend && $(FRONTEND_TEST_ENV) pnpm exec playwright install --with-deps
-	cd frontend && $(FRONTEND_TEST_ENV) pnpm run test:e2e
-
+.PHONY: up down model check test test-e2e
+up:
+	docker compose up --build -d
+down:
+	docker compose down
+model:
+	$(PYTHON) worker/model.py "$(MODEL_DIR)"
 check:
-	cd frontend && pnpm run lint && pnpm run typecheck
-
-test-ci: check test-backend test-frontend test-e2e
+	npm run lint
+	npm run check
+test:
+	npm run test:brain
+	$(PYTHON) -m unittest discover -s tests -p 'test_*.py' -v
+test-e2e:
+	npm run build
+	SUPO_MODEL_DIR="$${SUPO_MODEL_DIR:-$(abspath $(MODEL_DIR))}" npm run test:http

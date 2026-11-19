@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: supoclip-studio
+    runtime: docker
+    plan: standard
+    numInstances: 1
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    envVars:
+      - key: SUPO_DATA_DIR
+        value: /data

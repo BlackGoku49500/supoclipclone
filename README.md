@@ -1,126 +1,67 @@
-<p align="center">
-  <a href="https://www.supoclip.com">
-    <img src="assets/banner.jpg" alt="SupoClip dashboard with video input, caption controls, and recent clips" width="100%" />
-  </a>
-</p>
-
-<h3 align="center">Fuck OpusClip.</h3>
-
-<p align="center">
-  ... because good video clips shouldn't come with ugly watermarks or platform lock-in.
-</p>
-
-<p align="center">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-AGPL--3.0-blue.svg" alt="License: AGPL-3.0" /></a>
-  <a href="https://www.supoclip.com"><img src="https://img.shields.io/badge/hosted-supoclip.com-black.svg" alt="Hosted at supoclip.com" /></a>
-  <a href="docs/README.md"><img src="https://img.shields.io/badge/docs-docs%2F-green.svg" alt="Documentation" /></a>
-</p>
-
-<p align="center">
-  <a href="https://apps.apple.com/us/app/supoclip/id6784760040">
-    <img src="frontend/public/app-store-badge.svg" alt="Download SupoClip on the App Store" height="40" />
-  </a>
-  &nbsp;
-  <a href="https://www.producthunt.com/products/supoclip?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-supoclip" target="_blank" rel="noopener noreferrer">
-    <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1276786&theme=dark" alt="SupoClip on Product Hunt" height="40" />
-  </a>
-</p>
-
+---
+title: SupoClip Lite
+emoji: 🎬
+colorFrom: green
+colorTo: gray
+sdk: docker
+app_port: 7860
 ---
 
-SupoClip is an open-source, AI-powered video clipping tool. Give it a long video — a podcast, a talk, a stream VOD — and it finds the most viral-worthy moments, scores them, and renders them as vertical 9:16 clips with face-centered cropping, word-synced subtitles, hook titles, and optional B-roll. Run it yourself, customize it, inspect it — or use the hosted version and skip the setup.
+# SupoClip Lite
 
-**See it first:** [watch real clips SupoClip generated](https://www.supoclip.com/demo) from a long-form interview, or follow the [self-hosting tutorial](https://www.supoclip.com/blog/self-host-supoclip-docker) to run it on your own machine.
+Turn a public YouTube video or completed YouTube Live, Twitch, or Kick VOD into edited vertical MP4s. The studio, job queues, CPU speech model and encoder run in one container. OpenRouter is the only API key. **Load sample demo** opens the editor and exercises the real encoder without a key.
 
-## Ways to Use SupoClip
+## Run locally
 
-| Option | Details |
-|---|---|
-| **Hosted web app** | [www.supoclip.com](https://www.supoclip.com) — no infrastructure to run |
-| **iOS app** | [SupoClip on the App Store](https://apps.apple.com/us/app/supoclip/id6784760040) — the same hosted pipeline, from your iPhone |
-| **Self-host** | Docker Compose setup below, or the step-by-step [self-hosting tutorial](https://www.supoclip.com/blog/self-host-supoclip-docker) — AGPL-3.0, unlimited usage on your own hardware |
-| **MCP server** | [`mcp/`](mcp/) — use SupoClip from Claude, Cursor, and other MCP clients |
-| **REST API** | API keys from `/settings/api-keys` authenticate the backend directly — see the [API reference](docs/api-reference.md) |
-
-## Why SupoClip Exists
-
-OpusClip is genuinely good at what it does — AI clip selection, accurate captions, virality scoring. But your usage is metered by plan, some exports carry platform branding, and your content and workflows live on their servers under their terms.
-
-SupoClip gives you the same core pipeline without the leash:
-
-- **Self-hostable** — run it on your own hardware, process as much as it can handle
-- **No watermarks** — your content stays yours
-- **Open source** — AGPL-3.0, full transparency, fork and extend it however you like
-- **Hosted option** — when you'd rather not manage servers, the cloud version is there
-
-## Features
-
-- **YouTube, Twitch, Kick & uploads** — paste a YouTube video, a Twitch VOD or clip, or a Kick VOD or clip, or upload your own file (live streams are not supported). Twitch and Kick download providers and the optional Apify fallbacks are set in [docs/configuration.md](docs/configuration.md#twitch-and-kick-imports)
-
-- **AI clip selection** — an LLM (Gemini, GPT, Claude, or a local Ollama model) picks the 3–7 most clip-worthy segments from the transcript
-- **Virality scoring** — every clip gets hook, engagement, value, and shareability scores
-- **Smart vertical cropping** — face detection keeps the speaker centered in the 9:16 frame
-- **Word-synced subtitles** — AssemblyAI word-level timestamps, custom fonts, caption templates with animation styles
-- **Hook titles** — an AI-written headline burned into the top of each clip's opening seconds
-- **B-roll & transitions** — optional Pexels stock footage overlays and transition effects
-- **Built-in editor** — trim, split, and merge clips, then export with platform presets (TikTok, Reels, Shorts)
-- **Direct publishing** — connect your own YouTube, TikTok and Instagram accounts, then post or schedule clips from the task page
-- **Performance loop** — views, likes, comments and shares flow back from each platform and steer future clip selection toward what works for your audience
-- **Real-time progress** — live pipeline updates streamed to the browser while your video processes
-
-## Quick Start
-
-You need Docker, an [AssemblyAI](https://www.assemblyai.com/) API key for transcription, and one LLM provider key (Google, OpenAI, Anthropic, or a local Ollama).
-
-```bash
-git clone https://github.com/FujiwaraChoki/supoclip.git
-cd supoclip
+```sh
+docker compose up --build -d
 ```
 
-Create a `.env` in the root with your keys:
+Open **http://localhost:7860**. The first build downloads the speech model and media dependencies. Compose saves jobs, transcripts and clips in the local `studio-data` volume. `docker compose down` stops the studio and preserves the volume. The published port binds to loopback by default. [Deployment options](docs/DEPLOY.md)
 
-```env
-ASSEMBLY_AI_API_KEY=your_assemblyai_api_key
-LLM=google-gla:gemini-3-flash-preview
-GOOGLE_API_KEY=your_google_api_key
+## Studio workflow
+
+1. Paste a URL into **Source video**, or upload a local MP4, MOV, MKV or WebM. Analyze reads recording metadata and available subtitles. YouTube English and Hindi tracks take priority, with a second transcript lookup through `youtube-transcript-api`.
+2. Enter your OpenRouter key and select **Generate viral clips**. If subtitles are missing, the bundled multilingual Whisper base model transcribes the entire audio timeline in overlapping five-minute chunks on CPU. Each finished chunk is saved. You can also paste text or import SRT/VTT subtitles.
+3. The hook finder considers every timed passage in bounded OpenRouter requests. Its default is `nvidia/nemotron-3.5-super-vl:free`, with one retry through `openrouter/free` on a failed passage. It ranks up to six distinct hooks, grounded in source cue IDs. Short or sparse sources can yield fewer than three. Completed passages are cached for a retry after a quota reset. Free-model availability and quotas come from OpenRouter.
+4. Adjust the jump cuts, facecam rectangle, horizontal framing and caption style. **Streamer split** puts the selected facecam above gameplay at a 35/65 split. **Smart crop** uses your pan and punches in on hype moments. **Speaker** follows visible faces using mouth motion, with your pan position as the fallback. The optional hook banner covers the first three seconds.
+5. Preview and download use the same FFmpeg edit. The export is a 1080 × 1920, 30 fps H.264/AAC MP4 with fast-start playback. ASR and timed YouTube JSON3 words retain their timestamps through cuts. Subtitles that provide only phrase times use interpolated word highlights.
+
+For captioned VODs, discovery fetches metadata and subtitle text. The encoder requests each selected range with `yt-dlp --download-sections` and reuses it for subsequent edits. HLS may transfer neighboring fragments. A captionless VOD requires reading its complete audio once. The worker prefers audio-only renditions. On platforms that expose only muxed audio/video, it reads the lowest available rendition in bounded chunks and discards each chunk after transcription. It never assembles a full remote VOD file.
+
+## Development and verification
+
+Native development requires Node 22+, Python 3.11+, and an FFmpeg build with libass, libx264 and ffprobe. The HTTP test also uses FFmpeg's flite filter to synthesize its speech fixture. The Docker image includes these tools.
+
+```sh
+python3 -m venv .venv
+. .venv/bin/activate
+pip install -r worker/requirements.txt
+make model
+npm ci
+npm run dev
 ```
 
-Then start everything:
-
-```bash
-docker-compose up -d
-```
-
-First startup takes a few minutes; watch it with `docker-compose logs -f`. Once healthy, open [http://localhost:3107](http://localhost:3107), create an account, and start clipping. The backend API lives at [http://localhost:8000](http://localhost:8000) with interactive docs at `/docs`.
-
-The template sets `FRONTEND_PORT=3107`. Existing deployments without this setting keep port `3001`; preserve that port if your production reverse proxy uses it. See the [setup guide](docs/setup.md) for custom ports and public URLs.
-
-To run fully local with Whisper and Ollama (including the Docker networking Ollama needs), see the [self-hosting tutorial](https://www.supoclip.com/blog/self-host-supoclip-docker#local). To use a different LLM provider or configure the optional pieces (B-roll, analytics, emails, YouTube metadata), see the [configuration guide](docs/configuration.md). If something misbehaves, the [troubleshooting guide](docs/troubleshooting.md) covers the common failure modes.
-
-## Documentation
-
-Everything beyond this page lives in [`docs/`](docs/README.md):
-
-| Guide | What it covers |
-|---|---|
-| [Setup](docs/setup.md) | Docker-first install, local development, first-run checklist |
-| [Configuration](docs/configuration.md) | Every environment variable, operating modes, provider options |
-| [App Guide](docs/app-guide.md) | Screens, workflows, admin features, hosted vs self-host |
-| [Architecture](docs/architecture.md) | How the frontend, API, worker, queue, and pipeline fit together |
-| [API Reference](docs/api-reference.md) | Backend endpoints, API keys, admin and billing routes |
-| [Development](docs/development.md) | Running locally without Docker, testing, contributing workflow |
-| [Troubleshooting](docs/troubleshooting.md) | Fixes for the common ways things go wrong |
-
-## Development & Testing
-
-The stack runs locally without Docker too — see [development](docs/development.md) for the backend (`uv` + FastAPI + ARQ worker) and frontend (Next.js + pnpm) commands. The test suite spans pytest, Vitest, and Playwright, all reachable from the repo root:
-
-```bash
+```sh
+make check
 make test
+make test-e2e
 ```
 
-## License
+The production HTTP suite runs yt-dlp, local speech recognition, OpenCV and FFmpeg against a real HTTPS media fixture. It covers a two-hour, captionless recording and includes a hook at minute 119. Recorded platform metadata and deterministic OpenRouter responses keep the test repeatable. Unit tests check ten-hour transcript coverage, checkpoint recovery and word-aligned caption timing. [Repository audit and test coverage](docs/ARCHITECTURE.md)
 
-SupoClip is released under the [AGPL-3.0 License](LICENSE).
+## API
 
-Contributions are accepted under the terms in [CONTRIBUTING.md](CONTRIBUTING.md), including a license grant that allows the project owner to sublicense and relicense contributed code.
+| Request | Result |
+| --- | --- |
+| `POST /api/analyze-url` | Source ID, title, thumbnail, duration and timeline cues for a public URL |
+| `POST /api/upload` | Source metadata for a multipart video and optional transcript |
+| `POST /api/generate-clips` | With `Prefer: respond-async`, returns HTTP 202 and a job ID. The synchronous form returns `{clips}`. Pass the OpenRouter key as a bearer token. |
+| `GET /api/analysis-jobs/{id}` | Analysis stage, progress and, on completion, the source and ranked clips |
+| `DELETE /api/analysis-jobs/{id}` | Cancel analysis and keep finished transcription and model checkpoints |
+| `POST /api/preview` or `POST /api/render-clip` | Job ID for a 540 × 960 preview or 1080 × 1920 export |
+| `GET /api/jobs/{id}` or `DELETE /api/jobs/{id}` | Render status or cancellation |
+| `GET /api/media/{id}?download=1` | Session-scoped MP4 download with byte-range support |
+| `GET /api/health` | HTTP process readiness |
+
+Render requests contain `{sourceId, clip, settings}`. All job and media requests use the browser session cookie issued when a source is created. The API key stays in browser storage and in server memory during analysis. Jobs do not write it to disk. Inactive workspaces are eligible for removal after 24 hours.
