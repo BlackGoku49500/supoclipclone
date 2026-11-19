@@ -1,0 +1,36 @@
+{
+  "name": "supoclip-lite",
+  "version": "2.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --webpack",
+    "build": "next build --webpack",
+    "start": "next start",
+    "check": "tsc --noEmit",
+    "test:brain": "tsx --test tests/brain.test.ts",
+    "test:workers": "python3 -m unittest discover -s tests -p 'test_*.py' -v",
+    "test:http": "node tests/http-e2e.mjs",
+    "lint": "eslint app server lib tests"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "dependencies": {
+    "busboy": "^1.6.0",
+    "lucide-react": "^0.468.0",
+    "next": "^16.0.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/busboy": "^1.5.4",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "eslint": "^9.39.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "tsx": "^4.20.0",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.73.0"
+  }
+}

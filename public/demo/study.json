@@ -1,0 +1,420 @@
+{
+  "cues": [
+    {
+      "start": 0,
+      "end": 1.79,
+      "text": "A great cut starts before"
+    },
+    {
+      "start": 1.79,
+      "end": 3.2,
+      "text": "you touch the timeline."
+    },
+    {
+      "start": 4.84,
+      "end": 6.15,
+      "text": "Listen to the sentence."
+    },
+    {
+      "start": 7.79,
+      "end": 8.92,
+      "text": "There is a pulse in"
+    },
+    {
+      "start": 8.92,
+      "end": 9.89,
+      "text": "the way we speak."
+    },
+    {
+      "start": 11.54,
+      "end": 12.92,
+      "text": "Try cutting on the breath"
+    },
+    {
+      "start": 12.92,
+      "end": 14.49,
+      "text": "before the most important word."
+    },
+    {
+      "start": 16.14,
+      "end": 17.95,
+      "text": "The picture changes, and your"
+    },
+    {
+      "start": 17.95,
+      "end": 19.45,
+      "text": "ear feels the connection."
+    },
+    {
+      "start": 21.09,
+      "end": 22.42,
+      "text": "That tiny shift gives"
+    },
+    {
+      "start": 22.42,
+      "end": 23.77,
+      "text": "the next shot momentum."
+    },
+    {
+      "start": 24,
+      "end": 25.57,
+      "text": "If every shot lasts"
+    },
+    {
+      "start": 25.57,
+      "end": 27.19,
+      "text": "exactly two seconds, your"
+    },
+    {
+      "start": 27.19,
+      "end": 28.85,
+      "text": "viewer learns the pattern."
+    },
+    {
+      "start": 30.26,
+      "end": 32.0,
+      "text": "Once they can predict the"
+    },
+    {
+      "start": 32.0,
+      "end": 33.6,
+      "text": "next cut, attention drifts."
+    },
+    {
+      "start": 35.01,
+      "end": 35.92,
+      "text": "Keep three shots"
+    },
+    {
+      "start": 35.92,
+      "end": 36.63,
+      "text": "on the beat."
+    },
+    {
+      "start": 38.03,
+      "end": 39.25,
+      "text": "Then hold the fourth"
+    },
+    {
+      "start": 39.25,
+      "end": 40.38,
+      "text": "one a little longer."
+    },
+    {
+      "start": 41.78,
+      "end": 43.57,
+      "text": "That small surprise gives the"
+    },
+    {
+      "start": 43.57,
+      "end": 44.93,
+      "text": "eye a reason to stay."
+    },
+    {
+      "start": 46.33,
+      "end": 47.03,
+      "text": "Now the cut"
+    },
+    {
+      "start": 47.03,
+      "end": 47.77,
+      "text": "has a purpose."
+    },
+    {
+      "start": 48,
+      "end": 49.38,
+      "text": "The most powerful edit"
+    },
+    {
+      "start": 49.38,
+      "end": 50.38,
+      "text": "might be the one"
+    },
+    {
+      "start": 50.38,
+      "end": 51.17,
+      "text": "you leave out."
+    },
+    {
+      "start": 52.97,
+      "end": 54.08,
+      "text": "After a big idea,"
+    },
+    {
+      "start": 54.08,
+      "end": 55.04,
+      "text": "hold the image."
+    },
+    {
+      "start": 56.84,
+      "end": 58.55,
+      "text": "Let the sentence settle before"
+    },
+    {
+      "start": 58.55,
+      "end": 59.79,
+      "text": "you change the frame."
+    },
+    {
+      "start": 61.59,
+      "end": 62.98,
+      "text": "A pause gives the viewer"
+    },
+    {
+      "start": 62.98,
+      "end": 64.21,
+      "text": "time to feel something."
+    },
+    {
+      "start": 66.01,
+      "end": 67.42,
+      "text": "Listen for the thought that"
+    },
+    {
+      "start": 67.42,
+      "end": 68.54,
+      "text": "comes after the words."
+    },
+    {
+      "start": 70.34,
+      "end": 71.77,
+      "text": "Make your next cut there."
+    }
+  ],
+  "clips": [
+    {
+      "id": "clip_1",
+      "title": "Cut on the breath",
+      "viralityScore": 94,
+      "reason": "A precise editing trick turns an ordinary breath into a natural transition.",
+      "captions": [
+        {
+          "start": 0,
+          "end": 1.79,
+          "text": "A great cut starts before"
+        },
+        {
+          "start": 1.79,
+          "end": 3.2,
+          "text": "you touch the timeline."
+        },
+        {
+          "start": 4.84,
+          "end": 6.15,
+          "text": "Listen to the sentence."
+        },
+        {
+          "start": 7.79,
+          "end": 8.92,
+          "text": "There is a pulse in"
+        },
+        {
+          "start": 8.92,
+          "end": 9.89,
+          "text": "the way we speak."
+        },
+        {
+          "start": 11.54,
+          "end": 12.92,
+          "text": "Try cutting on the breath"
+        },
+        {
+          "start": 12.92,
+          "end": 14.49,
+          "text": "before the most important word."
+        },
+        {
+          "start": 16.14,
+          "end": 17.95,
+          "text": "The picture changes, and your"
+        },
+        {
+          "start": 17.95,
+          "end": 19.45,
+          "text": "ear feels the connection."
+        },
+        {
+          "start": 21.09,
+          "end": 22.42,
+          "text": "That tiny shift gives"
+        },
+        {
+          "start": 22.42,
+          "end": 23.77,
+          "text": "the next shot momentum."
+        }
+      ],
+      "hookTitle": "Cut on the breath",
+      "segments": [
+        {
+          "start": 0,
+          "end": 24
+        }
+      ],
+      "hypeMoments": [
+        3
+      ]
+    },
+    {
+      "id": "clip_2",
+      "title": "Break the two-second pattern",
+      "viralityScore": 91,
+      "reason": "A predictable rhythm sets up a fourth-shot surprise that demonstrates the lesson.",
+      "captions": [
+        {
+          "start": 24,
+          "end": 25.57,
+          "text": "If every shot lasts"
+        },
+        {
+          "start": 25.57,
+          "end": 27.19,
+          "text": "exactly two seconds, your"
+        },
+        {
+          "start": 27.19,
+          "end": 28.85,
+          "text": "viewer learns the pattern."
+        },
+        {
+          "start": 30.26,
+          "end": 32.0,
+          "text": "Once they can predict the"
+        },
+        {
+          "start": 32.0,
+          "end": 33.6,
+          "text": "next cut, attention drifts."
+        },
+        {
+          "start": 35.01,
+          "end": 35.92,
+          "text": "Keep three shots"
+        },
+        {
+          "start": 35.92,
+          "end": 36.63,
+          "text": "on the beat."
+        },
+        {
+          "start": 38.03,
+          "end": 39.25,
+          "text": "Then hold the fourth"
+        },
+        {
+          "start": 39.25,
+          "end": 40.38,
+          "text": "one a little longer."
+        },
+        {
+          "start": 41.78,
+          "end": 43.57,
+          "text": "That small surprise gives the"
+        },
+        {
+          "start": 43.57,
+          "end": 44.93,
+          "text": "eye a reason to stay."
+        },
+        {
+          "start": 46.33,
+          "end": 47.03,
+          "text": "Now the cut"
+        },
+        {
+          "start": 47.03,
+          "end": 47.77,
+          "text": "has a purpose."
+        }
+      ],
+      "hookTitle": "Break the two-second pattern",
+      "segments": [
+        {
+          "start": 24,
+          "end": 48
+        }
+      ],
+      "hypeMoments": [
+        27
+      ]
+    },
+    {
+      "id": "clip_3",
+      "title": "Let the last word land",
+      "viralityScore": 89,
+      "reason": "A counterintuitive opening leads into a practical exercise in holding attention.",
+      "captions": [
+        {
+          "start": 48,
+          "end": 49.38,
+          "text": "The most powerful edit"
+        },
+        {
+          "start": 49.38,
+          "end": 50.38,
+          "text": "might be the one"
+        },
+        {
+          "start": 50.38,
+          "end": 51.17,
+          "text": "you leave out."
+        },
+        {
+          "start": 52.97,
+          "end": 54.08,
+          "text": "After a big idea,"
+        },
+        {
+          "start": 54.08,
+          "end": 55.04,
+          "text": "hold the image."
+        },
+        {
+          "start": 56.84,
+          "end": 58.55,
+          "text": "Let the sentence settle before"
+        },
+        {
+          "start": 58.55,
+          "end": 59.79,
+          "text": "you change the frame."
+        },
+        {
+          "start": 61.59,
+          "end": 62.98,
+          "text": "A pause gives the viewer"
+        },
+        {
+          "start": 62.98,
+          "end": 64.21,
+          "text": "time to feel something."
+        },
+        {
+          "start": 66.01,
+          "end": 67.42,
+          "text": "Listen for the thought that"
+        },
+        {
+          "start": 67.42,
+          "end": 68.54,
+          "text": "comes after the words."
+        },
+        {
+          "start": 70.34,
+          "end": 71.77,
+          "text": "Make your next cut there."
+        }
+      ],
+      "hookTitle": "Let the last word land",
+      "segments": [
+        {
+          "start": 48,
+          "end": 72
+        }
+      ],
+      "hypeMoments": [
+        51
+      ]
+    }
+  ]
+}

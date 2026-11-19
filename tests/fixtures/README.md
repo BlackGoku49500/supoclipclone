@@ -1,0 +1,1 @@
+The face-tracking test uses a reduced version of the U.S. Navy portrait of Rear Admiral Grace Hopper distributed in Matplotlib's public sample data. The photograph is a U.S. government work. [Matplotlib source](https://github.com/matplotlib/matplotlib/blob/main/lib/matplotlib/mpl-data/sample_data/grace_hopper.jpg)
