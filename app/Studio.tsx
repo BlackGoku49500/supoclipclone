@@ -686,9 +686,14 @@ export default function Studio() {
       );
       const result = await request<{ jobId: string }>("/api/generate-clips", {
         ...options,
+        // Receive the job ID even if Cancel is pressed during the short submission.
+        signal: AbortSignal.timeout(30000),
         headers: { "Content-Type": "application/json", Prefer: "respond-async", Authorization: "Bearer " + key.trim() },
       });
-      if (signal.aborted) return;
+      if (signal.aborted) {
+        await request("/api/analysis-jobs/" + encodeURIComponent(result.jobId), { method: "DELETE" });
+        return;
+      }
       try { sessionStorage.setItem("supoclip.analysis", result.jobId); } catch {}
       setAnalysisStage("Queued for analysis");
       setAnalysisId(result.jobId);

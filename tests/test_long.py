@@ -49,6 +49,8 @@ class LongRecordings(unittest.TestCase):
         raw = {"events":[{"tStartMs":5000,"dDurationMs":2000,"segs":[{"utf8":"wait"},{"utf8":" now","tOffsetMs":1680}]}]}
         cue = ingest.parse_captions(json.dumps(raw), "json3", 20)[0]
         self.assertEqual(cue["words"][1]["start"], 6.68)
+        vtt = "WEBVTT\n\n00:00:05.000 --> 00:00:07.000\nwait <00:00:06.680><c>now</c>"
+        self.assertEqual(ingest.parse_captions(vtt, "vtt", 20)[0]["words"], cue["words"])
         span = render.Span(Path("unused"),0,2,5,7,0,60)
         subtitles = render.make_subtitles({"captions":[cue]}, {"hook":False}, [span])
         self.assertIn("0:00:01.68,0:00:02.00,Caption", subtitles)
@@ -66,10 +68,11 @@ class LongRecordings(unittest.TestCase):
             right[12:162,192:320] = photo
             command = ["ffmpeg","-nostdin","-v","error","-f","rawvideo","-pix_fmt","bgr24","-s","320x180","-r","3",
                        "-i","pipe:0","-c:v","libx264","-pix_fmt","yuv420p","-threads","1",str(path)]
-            subprocess.run(command, input=left.tobytes()*9 + right.tobytes()*9, check=True)
-            centers = speaker.frame_centers(path, 0, 6, 320, 180)
+            subprocess.run(command, input=left.tobytes()*9 + right.tobytes()*9 + np.full_like(left, 50).tobytes()*6, check=True)
+            centers = speaker.frame_centers(path, 0, 8, 320, 180)
             self.assertLess(centers[0][1], .35)
-            self.assertGreater(centers[-1][1], .65)
+            self.assertGreater(centers[-2][1], .65)
+            self.assertIsNone(centers[-1][1])
             self.assertIn("clip(", speaker.pan_expression(centers, 320, 180, .5))
             self.assertEqual(speaker.pan_expression([], 320, 180, .37), "0.370000")
 

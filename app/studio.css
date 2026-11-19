@@ -549,3 +549,4 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 
 .supo .layout-note{color:#a4a5ad;font:400 12px/1.5 Inter,sans-serif;margin:-7px 0 17px}
 .supo .frame-hook{top:5.2%;font-size:6.4cqw;left:6%;right:6%}.supo .frame-caption{bottom:16.2%;font-size:6.4cqw}
+.tabs.layout-tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); }

@@ -154,6 +154,19 @@ def clock_time(text):
     return sum(float(value) * 60 ** position for position, value in enumerate(reversed(fields)))
 
 
+def timed_tokens(pieces, end):
+    words = []
+    for idx, (begin, text) in enumerate(pieces):
+        stop = pieces[idx + 1][0] if idx + 1 < len(pieces) else end
+        tokens = clean_caption(text).split()
+        if tokens and stop <= begin:
+            return []
+        for n, token in enumerate(tokens):
+            words.append({"text": token, "start": begin + (stop-begin)*n/len(tokens),
+                          "end": begin + (stop-begin)*(n+1)/len(tokens)})
+    return words
+
+
 def parse_captions(raw, ext, duration):
     entries = []
     timings = {}
@@ -167,16 +180,8 @@ def parse_captions(raw, ext, duration):
             pieces = [seg for seg in event["segs"] if isinstance(seg, dict) and clean_caption(str(seg.get("utf8", "")))]
             if any("tOffsetMs" in seg for seg in pieces):
                 end = start + finite(event.get("dDurationMs")) / 1000
-                positions = [start + finite(seg.get("tOffsetMs")) / 1000 for seg in pieces] + [end]
-                words = []
-                for idx, seg in enumerate(pieces):
-                    tokens = clean_caption(seg["utf8"]).split()
-                    begin, stop = positions[idx:idx+2]
-                    for n, token in enumerate(tokens):
-                        words.append({"text": token, "start": begin + (stop-begin)*n/len(tokens),
-                                      "end": begin + (stop-begin)*(n+1)/len(tokens)})
-                if words and all(w["end"] > w["start"] for w in words):
-                    timings[start] = words
+                timings[start] = timed_tokens([(start + finite(seg.get("tOffsetMs")) / 1000, seg["utf8"])
+                                              for seg in pieces], end)
             entries.append((start, start + finite(event.get("dDurationMs")) / 1000, text))
     else:
         timestamp = r"((?:\d+:)?\d{1,2}:\d{2}(?:[.,]\d{1,3})?)"
@@ -186,7 +191,15 @@ def parse_captions(raw, ext, duration):
             for i, line in enumerate(lines):
                 match = timing.match(line.strip())
                 if match:
-                    entries.append((clock_time(match[1]), clock_time(match[2]), " ".join(lines[i+1:])))
+                    start, end = clock_time(match[1]), clock_time(match[2])
+                    text = " ".join(lines[i+1:])
+                    if ext == "vtt":
+                        pieces = re.split("<" + timestamp + ">", text)
+                        if len(pieces) > 1:
+                            offsets = [(start, pieces[0])] + [(clock_time(pieces[j]), pieces[j+1])
+                                                            for j in range(1, len(pieces), 2)]
+                            timings[start] = timed_tokens(offsets, end)
+                    entries.append((start, end, text))
                     break
     cues = []
     previous_words, previous_end = [], -1.0

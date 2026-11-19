@@ -6,7 +6,7 @@ Add a line here when a pull request changes something a user can see. Use **New*
 
 ## 2026-11-19
 
-- **New** Run the Lite studio in one container, find highlights throughout captionless stream archives with local speech recognition, then export vertical clips with speaker or streamer framing and timed captions. [Lite changes](https://github.com/BlackGoku49500/supoclipclone/compare/main...feat/supoclip-lite)
+- **New** Run the Lite studio in one container, find highlights throughout captionless stream archives with local speech recognition, then export vertical clips with speaker or streamer framing and timed captions. ([#1](https://github.com/BlackGoku49500/supoclipclone/pull/1))
 
 ## 2026-11-12
 

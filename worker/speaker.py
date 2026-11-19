@@ -19,6 +19,7 @@ def frame_centers(path, start, seconds, width, height):
             "-threads", "1", "-f", "rawvideo", "pipe:1"]
     raw = subprocess.run(args, capture_output=True, check=True, timeout=150).stdout
     previous, points, current, proposed, votes = None, [], None, None, 0
+    missed = 0
     for index, frame in enumerate(np.frombuffer(raw, dtype=np.uint8).reshape((-1, h, w))):
         faces = cascade.detectMultiScale(frame, scaleFactor=1.12, minNeighbors=4, minSize=(20, 20))
         scores = []
@@ -35,7 +36,12 @@ def frame_centers(path, start, seconds, width, height):
             scores.append((math.sqrt(fw * fh / (w * h)) + min(movement / 30, .6) + continuity, center))
         previous = frame
         if not scores:
+            missed += 1
+            if current is not None and missed >= 4:
+                points.append((index / 3, None))
+                current, proposed, votes = None, None, 0
             continue
+        missed = 0
         winner = float(max(scores)[1])
         if current is None:
             current = winner
@@ -47,7 +53,7 @@ def frame_centers(path, start, seconds, width, height):
             proposed = winner
             if votes >= 3:
                 current, votes = winner, 0
-        if not points or (index / 3 - points[-1][0] >= .9 and abs(current - points[-1][1]) > .025):
+        if not points or points[-1][1] is None or (index / 3 - points[-1][0] >= .9 and abs(current - points[-1][1]) > .025):
             points.append((index / 3, current))
     return points
 
@@ -62,7 +68,7 @@ def pan_expression(centers, width, height, fallback):
     previous = pan(center) if first <= .4 else fallback
     terms = [f"{previous:.5f}"]
     for timestamp, center in centers:
-        target = pan(center)
+        target = fallback if center is None else pan(center)
         if abs(target - previous) > .005:
             terms.append(f"({target - previous:.5f})*clip((t-{timestamp:.3f})/0.40,0,1)")
             previous = target

@@ -261,7 +261,7 @@ export function FramingEditor(props: EditorProps) {
         <div className="field-row">
           <span className="field-label">Vertical layout</span>
         </div>
-        <div className="tabs" role="group" aria-label="Vertical layout">
+        <div className="tabs layout-tabs" role="group" aria-label="Vertical layout">
           {modes.map(({ id, label, Icon }) => (
             <button
               key={id}
